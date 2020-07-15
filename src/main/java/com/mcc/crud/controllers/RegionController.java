@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -26,8 +27,8 @@ public class RegionController {
     
     @GetMapping("")
     public String index(Model model) {
-        model.addAttribute("rgn", new Region());
-        model.addAttribute("Region", regionService.getAll());
+        model.addAttribute("Region", new Region());
+        model.addAttribute("Regions", regionService.getAll());
         return "index";
     }
     
@@ -35,5 +36,12 @@ public class RegionController {
     public String save(@Valid Region region) {
         regionService.save(region);
         return "redirect:/";
+    }
+    
+    @GetMapping("/formUpdate/{id}")
+    public String formUpdate(@PathVariable (value = "id") Integer id, Model model) {
+        Region region = regionService.getRegionById(id);
+        model.addAttribute("region", region);
+        return "update";
     }
 }

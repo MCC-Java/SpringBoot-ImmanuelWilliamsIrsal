@@ -15,7 +15,7 @@ and open the template in the editor.
             <h1>Will I Am</h1>
             <br>
             
-            <form th:action="@{/save}" th:object="${rgn}" method="POST">
+            <form th:action="@{/save}" th:object="${Region}" method="POST">
                 <label>Region ID</label>
                 <input type="text" id="textId" class="form-control" th:field="*{Id}"><br>
                 <label>Region Name</label>
@@ -27,10 +27,13 @@ and open the template in the editor.
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Action</th>
                 </tr>
-                <tr th:each = "as : ${Region}">
+                <tr th:each = "as : ${Regions}">
                     <td th:text="${as.id}"></td>
                     <td th:text="${as.name}"></td>
+                    <td><a th:href="@{#}"><button>Delete</button></a></td>
+                    <td><a th:href="@{/formUpdate/{id}(id=${as.id})}"><button>Update</button></a></td>
                 </tr>
             </table>
         </div>
