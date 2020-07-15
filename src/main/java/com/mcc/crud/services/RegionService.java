@@ -45,14 +45,7 @@ public class RegionService {
         regionRepository.delete(new Region(id));
     }
     
-    public Region getRegionById(Integer id) {
-        java.util.Optional<Region> optional = regionRepository.findById(id);
-        Region region = null;
-        if(optional.isPresent()) {
-            region = optional.get();
-        } else {
-            throw new RuntimeException("Region not found for ID: "+id);
-        }
-        return region;
+    public Region findById(Integer id) {
+        return regionRepository.findById(id).get();
     }
 }

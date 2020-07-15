@@ -27,8 +27,8 @@ public class RegionController {
     
     @GetMapping("")
     public String index(Model model) {
-        model.addAttribute("Region", new Region());
-        model.addAttribute("Regions", regionService.getAll());
+        model.addAttribute("region", new Region());
+        model.addAttribute("regions", regionService.getAll());
         return "index";
     }
     
@@ -38,10 +38,17 @@ public class RegionController {
         return "redirect:/";
     }
     
-    @GetMapping("/formUpdate/{id}")
-    public String formUpdate(@PathVariable (value = "id") Integer id, Model model) {
-        Region region = regionService.getRegionById(id);
-        model.addAttribute("region", region);
-        return "update";
+    @GetMapping("{id}")
+    public String getById(Model model, @PathVariable("id") String id) {
+        Integer key = Integer.parseInt(id);
+        model.addAttribute("region", regionService.findById(key));
+        model.addAttribute("regions", regionService.getAll());
+        return "index";
+    }
+    
+    @GetMapping("/delete/{id}")
+    public String delete(Model model, @PathVariable("id") String id) {
+        regionService.delete(Integer.parseInt(id));
+        return "redirect:/";
     }
 }
