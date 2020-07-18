@@ -42,6 +42,7 @@ public class RegionController {
     public String getById(Model model, @PathVariable("id") String id) {
         Integer key = Integer.parseInt(id);
         model.addAttribute("region", regionService.findById(key));
+//        model.addAttribute("regions", regionService.findById(key));
         model.addAttribute("regions", regionService.getAll());
         return "index";
     }

@@ -10,23 +10,21 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     </head>
     <body>
         <div class="container" align="center">
             <h1>Valorant Regions</h1>
             <br>
-            <form th:action="@{/save}" th:object="${region}" method="POST">
-                <br>
-                <label>Region ID</label>
-                <input type="text" id="textId" class="form-control" th:field="*{id}">
-                <br>
-                <label>Region Name</label>
-                <input type="text" id="textName" class="form-control" th:field="*{name}">
-                <br>
-                <input class="btn btn-success" type="submit" value="Save">
-            </form>
-            <br>
-            <table class="table">
+            <div class="container">
+                <div align="right" style="margin-bottom: 25px;">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#saveModal">
+                        Add
+                    </button>
+                </div>
+            </div>
+            <table class="table" id="dataTable">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -39,15 +37,50 @@ and open the template in the editor.
                         <td th:text="${region.id}"></td>
                         <td th:text="${region.name}"></td>
                         <td>
-                            <a th:href="@{${region.id}}" class="btn btn-warning">update</a>
+                            <a th:href="@{${region.id}}" class="btn btn-warning">get</a>
                             <a th:href="@{'/delete/'+${region.id}}" class="btn btn-danger">delete</a>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="saveModalLabel">Add Region</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form th:action="@{/save}" th:object="${region}" method="POST">
+                        <div class="modal-body">
+                            <br>
+                            <label>Region ID</label>
+                            <input type="text" id="textId" class="form-control" th:field="*{id}">
+                            <br>
+                            <label>Region Name</label>
+                            <input type="text" id="textName" class="form-control" th:field="*{name}">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input class="btn btn-success" type="submit" value="Save" style="margin: 10px;">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+        
+        <!--datatables-->
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+        <script>
+            $(document).ready( function () {$('#dataTable').DataTable();});
+        </script>
     </body>
 </html>
